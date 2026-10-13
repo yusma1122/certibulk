@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CertiBulk — Bulk Certificate Generator</title>
+<meta name="description" content="Buat sertifikat massal langsung di browser. Tanpa upload ke server.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- Icon sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-type" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-zoom-in" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></symbol>
+  <symbol id="i-zoom-out" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></symbol>
+  <symbol id="i-maximize" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></symbol>
+  <symbol id="i-align-left" viewBox="0 0 24 24"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></symbol>
+  <symbol id="i-align-center" viewBox="0 0 24 24"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></symbol>
+  <symbol id="i-align-right" viewBox="0 0 24 24"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="7" y2="18"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></symbol>
+  <symbol id="i-crosshair" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ============ LEFT SIDEBAR ============ -->
+  <aside class="sidebar" aria-label="Navigasi utama">
+    <div class="brand">
+      <span class="brand-mark"><svg class="icon"><use href="#i-award"/></svg></span>
+      <span class="brand-name">CertiBulk</span>
+    </div>
+    <nav class="nav" id="nav" aria-label="Bagian aplikasi">
+      <button type="button" class="nav-item" data-view="workspace"><svg class="icon"><use href="#i-layout"/></svg><span>Workspace</span></button>
+      <button type="button" class="nav-item" data-view="template"><svg class="icon"><use href="#i-image"/></svg><span>Template</span></button>
+      <button type="button" class="nav-item" data-view="editor"><svg class="icon"><use href="#i-type"/></svg><span>Name Editor</span></button>
+      <button type="button" class="nav-item" data-view="participants"><svg class="icon"><use href="#i-users"/></svg><span>Participants</span><span class="nav-badge" id="nav-badge-participants" hidden>0</span></button>
+      <button type="button" class="nav-item" data-view="export"><svg class="icon"><use href="#i-download"/></svg><span>Export</span></button>
+      <button type="button" class="nav-item" data-view="settings"><svg class="icon"><use href="#i-settings"/></svg><span>Pengaturan</span></button>
+    </nav>
+    <div class="privacy-note">
+      <svg class="icon"><use href="#i-shield"/></svg>
+      <p>Your files stay on your device. No upload to a server is required.</p>
+    </div>
+  </aside>
+
+  <!-- ============ CENTER CANVAS ============ -->
+  <main class="canvas-area" aria-label="Preview sertifikat">
+    <div class="canvas-toolbar">
+      <div class="seg" role="group" aria-label="Mode preview">
+        <button type="button" class="seg-btn" id="mode-design" data-mode="design" aria-pressed="true">Desain</button>
+        <button type="button" class="seg-btn" id="mode-participant" data-mode="participant" aria-pressed="false">Peserta</button>
+      </div>
+
+      <div class="pnav" id="pnav" aria-label="Navigasi preview peserta">
+        <button type="button" class="icon-btn" id="prev-btn" aria-label="Peserta sebelumnya"><svg class="icon"><use href="#i-chevron-left"/></svg></button>
+        <span class="pnav-label" id="pnav-label" aria-live="polite">Peserta 0 dari 0</span>
+        <button type="button" class="icon-btn" id="next-btn" aria-label="Peserta berikutnya"><svg class="icon"><use href="#i-chevron-right"/></svg></button>
+      </div>
+
+      <div class="toolbar-spacer"></div>
+
+      <button type="button" class="icon-btn toggle" id="guides-btn" aria-pressed="true" aria-label="Tampilkan panduan posisi" title="Panduan posisi"><svg class="icon"><use href="#i-crosshair"/></svg></button>
+      <div class="zoom" role="group" aria-label="Zoom preview">
+        <button type="button" class="icon-btn" id="zoom-out" aria-label="Perkecil"><svg class="icon"><use href="#i-zoom-out"/></svg></button>
+        <button type="button" class="zoom-label" id="zoom-label" aria-label="Zoom saat ini, klik untuk menyesuaikan layar">Fit</button>
+        <button type="button" class="icon-btn" id="zoom-in" aria-label="Perbesar"><svg class="icon"><use href="#i-zoom-in"/></svg></button>
+        <button type="button" class="icon-btn" id="zoom-100" aria-label="Ukuran asli 100%" title="100%"><svg class="icon"><use href="#i-maximize"/></svg></button>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="empty-state" id="empty-state">
+        <div class="dropzone dz-big" data-dz tabindex="0" role="button" aria-label="Unggah template sertifikat. Seret file ke sini atau tekan Enter untuk memilih file">
+          <svg class="icon icon-xl"><use href="#i-upload"/></svg>
+          <h2>Unggah template sertifikat</h2>
+          <p>Seret &amp; lepas gambar PNG atau JPG kosong ke sini</p>
+          <span class="btn primary">Browse Files</span>
+        </div>
+      </div>
+      <div class="canvas-holder" id="canvas-holder" hidden>
+        <canvas id="cert-canvas" tabindex="0" aria-label="Preview sertifikat. Seret teks nama untuk memindahkan, atau gunakan tombol panah untuk menggeser 1 piksel (Shift untuk 10 piksel)."></canvas>
+      </div>
+      <div class="drop-overlay" id="drop-overlay" hidden>Lepaskan untuk menjadikan template</div>
+    </div>
+
+    <div class="canvas-status" id="canvas-status">
+      <span class="chip" id="status-pos">X — · Y —</span>
+      <span class="chip" id="status-size">—</span>
+      <span class="chip warn" id="status-warn" hidden></span>
+    </div>
+  </main>
+
+  <!-- ============ RIGHT PROPERTIES PANEL ============ -->
+  <aside class="panel" id="panel" aria-label="Panel properti">
+    <div class="panel-top">
+      <span class="panel-top-title" id="panel-title">Workspace</span>
+      <button type="button" class="icon-btn panel-close" id="panel-close" aria-label="Tutup panel"><svg class="icon"><use href="#i-x"/></svg></button>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- WORKSPACE -->
+      <section class="view" id="view-workspace" data-title="Workspace">
+        <h2>Workspace</h2>
+        <p class="muted">Ikuti langkah berikut untuk membuat sertifikat massal.</p>
+        <ol class="steps" id="steps">
+          <li class="step" data-step="template"><span class="step-dot"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Unggah template</strong><span class="muted" id="step-template-txt">Belum ada template</span></div><button type="button" class="btn small" data-goto="template">Buka</button></li>
+          <li class="step" data-step="design"><span class="step-dot"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Atur posisi &amp; gaya nama</strong><span class="muted">Seret teks pada canvas atau isi X / Y</span></div><button type="button" class="btn small" data-goto="editor">Buka</button></li>
+          <li class="step" data-step="participants"><span class="step-dot"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Masukkan peserta</strong><span class="muted" id="step-participants-txt">Belum ada peserta</span></div><button type="button" class="btn small" data-goto="participants">Buka</button></li>
+          <li class="step" data-step="preview"><span class="step-dot"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Periksa preview</strong><span class="muted">Gunakan mode “Peserta” di atas canvas</span></div><button type="button" class="btn small" id="goto-preview">Pratinjau</button></li>
+          <li class="step" data-step="export"><span class="step-dot"><svg class="icon"><use href="#i-check"/></svg></span><div><strong>Generate &amp; unduh ZIP</strong><span class="muted">Atur format dan nama file</span></div><button type="button" class="btn small" data-goto="export">Buka</button></li>
+        </ol>
+      </section>
+
+      <!-- TEMPLATE -->
+      <section class="view" id="view-template" data-title="Certificate Template" hidden>
+        <h2>Certificate Template</h2>
+        <p class="muted">PNG, JPG, atau JPEG. Hasil ekspor memakai resolusi asli template.</p>
+        <div class="dropzone" id="dz-panel" data-dz tabindex="0" role="button" aria-label="Unggah template. Seret file ke sini atau tekan Enter untuk memilih file">
+          <svg class="icon icon-lg"><use href="#i-upload"/></svg>
+          <strong>Seret &amp; lepas gambar</strong>
+          <span class="muted">atau</span>
+          <span class="btn primary">Browse Files</span>
+        </div>
+        <div class="card" id="template-info" hidden>
+          <div class="card-title"><svg class="icon"><use href="#i-file"/></svg><span id="tpl-name" class="ellipsis">—</span></div>
+          <dl class="kv">
+            <dt>Dimensi</dt><dd id="tpl-dim">—</dd>
+            <dt>Ukuran file</dt><dd id="tpl-size">—</dd>
+            <dt>Tipe</dt><dd id="tpl-type">—</dd>
+          </dl>
+          <div class="btn-row">
+            <button type="button" class="btn" id="tpl-replace"><svg class="icon"><use href="#i-upload"/></svg>Ganti template</button>
+            <button type="button" class="btn danger-ghost" id="tpl-remove"><svg class="icon"><use href="#i-trash"/></svg>Hapus</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- NAME EDITOR / PROPERTIES -->
+      <section class="view" id="view-editor" data-title="Name Editor" hidden>
+        <h2>Name Editor</h2>
+        <p class="muted">Anchor teks: posisi X mengikuti alignment (kiri / tengah / kanan), posisi Y adalah baseline. Satuan piksel pada resolusi asli template.</p>
+
+        <div class="field">
+          <label for="c-sample">Teks contoh (mode Desain)</label>
+          <input type="text" id="c-sample" maxlength="120" autocomplete="off">
+        </div>
+
+        <fieldset class="group">
+          <legend>Tipografi</legend>
+          <div class="field">
+            <label for="c-font">Font family</label>
+            <select id="c-font"></select>
+            <p class="hint" id="font-note" role="status"></p>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="c-weight">Font weight</label>
+              <select id="c-weight">
+                <option value="400">Regular (400)</option>
+                <option value="700">Bold (700)</option>
+              </select>
+            </div>
+            <div class="field">
+              <span class="label" id="lbl-style">Gaya</span>
+              <label class="switch"><input type="checkbox" id="c-italic"><span class="switch-ui" aria-hidden="true"></span><span>Italic</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-color-hex">Warna teks</label>
+            <div class="color-row">
+              <input type="color" id="c-color" aria-label="Pilih warna teks">
+              <input type="text" id="c-color-hex" maxlength="7" spellcheck="false" autocomplete="off" placeholder="#1F2937">
+            </div>
+          </div>
+          <div class="field">
+            <span class="label" id="lbl-align">Text alignment</span>
+            <div class="seg wide" role="radiogroup" aria-labelledby="lbl-align" id="c-align">
+              <button type="button" class="seg-btn" role="radio" data-align="left" aria-checked="false" aria-label="Rata kiri"><svg class="icon"><use href="#i-align-left"/></svg></button>
+              <button type="button" class="seg-btn" role="radio" data-align="center" aria-checked="true" aria-label="Rata tengah"><svg class="icon"><use href="#i-align-center"/></svg></button>
+              <button type="button" class="seg-btn" role="radio" data-align="right" aria-checked="false" aria-label="Rata kanan"><svg class="icon"><use href="#i-align-right"/></svg></button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-size">Font size (px)</label>
+            <div class="num-range"><input type="range" id="c-size-r" aria-label="Font size slider" min="8" max="400" step="1"><input type="number" id="c-size" min="4" max="3000" step="1"></div>
+          </div>
+          <div class="field">
+            <label for="c-ls">Letter spacing (px)</label>
+            <div class="num-range"><input type="range" id="c-ls-r" aria-label="Letter spacing slider" min="-10" max="60" step="0.5"><input type="number" id="c-ls" min="-50" max="300" step="0.5"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Posisi &amp; bentuk</legend>
+          <div class="row2">
+            <div class="field"><label for="c-x">X Position</label><input type="number" id="c-x" step="1"></div>
+            <div class="field"><label for="c-y">Y Position (baseline)</label><input type="number" id="c-y" step="1"></div>
+          </div>
+          <div class="field">
+            <label for="c-maxw">Maximum text width (px)</label>
+            <input type="number" id="c-maxw" min="10" step="1">
+          </div>
+          <div class="field">
+            <label for="c-rot">Rotation (derajat)</label>
+            <div class="num-range"><input type="range" id="c-rot-r" aria-label="Rotation slider" min="-180" max="180" step="1"><input type="number" id="c-rot" min="-360" max="360" step="1"></div>
+          </div>
+          <button type="button" class="btn" id="c-center"><svg class="icon"><use href="#i-align-center"/></svg>Tengahkan horizontal</button>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Auto-fit nama panjang</legend>
+          <label class="switch"><input type="checkbox" id="c-autofit"><span class="switch-ui" aria-hidden="true"></span><span>Kecilkan font otomatis agar muat</span></label>
+          <div class="field">
+            <label for="c-minsize">Ukuran font minimum (px)</label>
+            <input type="number" id="c-minsize" min="4" step="1">
+          </div>
+          <p class="hint">Jika nama tetap tidak muat pada ukuran minimum, Anda akan diberi peringatan sebelum generate.</p>
+        </fieldset>
+      </section>
+
+      <!-- PARTICIPANTS -->
+      <section class="view" id="view-participants" data-title="Participants" hidden>
+        <h2>Participants</h2>
+        <div class="field">
+          <label for="p-paste">Tempel daftar nama (satu per baris)</label>
+          <textarea id="p-paste" rows="5" placeholder="Ahmad Fauzan&#10;Siti Rahmah&#10;Muhammad Rizky" spellcheck="false"></textarea>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn primary" id="p-append"><svg class="icon"><use href="#i-plus"/></svg>Tambahkan</button>
+          <button type="button" class="btn" id="p-replace">Ganti daftar</button>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn" id="p-import-txt"><svg class="icon"><use href="#i-upload"/></svg>Impor TXT</button>
+          <button type="button" class="btn" id="p-import-csv"><svg class="icon"><use href="#i-upload"/></svg>Impor CSV</button>
+        </div>
+        <p class="hint" id="p-report" role="status"></p>
+
+        <div class="banner warn" id="p-dupbar" hidden>
+          <svg class="icon"><use href="#i-alert"/></svg>
+          <span id="p-dup-text"></span>
+          <button type="button" class="btn small" id="p-dedupe">Hapus duplikat</button>
+        </div>
+
+        <div class="p-add">
+          <label for="p-new" class="sr-only">Tambah satu nama</label>
+          <input type="text" id="p-new" placeholder="Tambah satu nama" autocomplete="off">
+          <button type="button" class="btn" id="p-add" aria-label="Tambah nama"><svg class="icon"><use href="#i-plus"/></svg></button>
+        </div>
+
+        <div class="p-tools">
+          <div class="search">
+            <svg class="icon"><use href="#i-search"/></svg>
+            <label for="p-search" class="sr-only">Cari nama peserta</label>
+            <input type="search" id="p-search" placeholder="Cari nama" autocomplete="off">
+          </div>
+          <button type="button" class="btn danger-ghost" id="p-clear">Hapus semua</button>
+        </div>
+        <p class="hint" id="p-count" aria-live="polite">0 peserta</p>
+
+        <div class="ptable" role="table" aria-label="Daftar peserta">
+          <div class="ptable-head" role="row">
+            <span role="columnheader">No</span><span role="columnheader">Nama peserta</span><span role="columnheader">Status</span><span role="columnheader" class="sr-only">Aksi</span>
+          </div>
+          <div class="ptable-scroll" id="p-scroll">
+            <div class="ptable-spacer" id="p-spacer"><div class="ptable-rows" id="p-rows" role="rowgroup"></div></div>
+            <div class="ptable-empty" id="p-empty">Belum ada peserta.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPORT -->
+      <section class="view" id="view-export" data-title="Export" hidden>
+        <h2>Export</h2>
+        <fieldset class="group">
+          <legend>Format output</legend>
+          <div class="seg wide" role="radiogroup" aria-label="Format output" id="e-format">
+            <button type="button" class="seg-btn" role="radio" data-format="png" aria-checked="true">PNG</button>
+            <button type="button" class="seg-btn" role="radio" data-format="jpg" aria-checked="false">JPG</button>
+          </div>
+          <div class="field" id="e-quality-wrap" hidden>
+            <label for="e-quality">Kualitas JPG: <b id="e-quality-val">92</b>%</label>
+            <input type="range" id="e-quality" min="50" max="100" step="1">
+          </div>
+          <p class="hint" id="e-res">Resolusi output mengikuti template asli.</p>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Penamaan file</legend>
+          <div class="field">
+            <label for="e-pattern">Pola nama file</label>
+            <input type="text" id="e-pattern" spellcheck="false" autocomplete="off">
+            <div class="chips">
+              <button type="button" class="chip btn-chip" data-token="{index}">{index}</button>
+              <button type="button" class="chip btn-chip" data-token="{name}">{name}</button>
+              <button type="button" class="chip btn-chip" data-pattern="Sertifikat_{name}">Sertifikat_{name}</button>
+              <button type="button" class="chip btn-chip" data-pattern="{index}_{name}">{index}_{name}</button>
+            </div>
+            <p class="hint" id="e-example">Contoh: —</p>
+          </div>
+          <div class="field">
+            <label for="e-zip">Nama file ZIP</label>
+            <input type="text" id="e-zip" spellcheck="false" autocomplete="off">
+            <p class="hint">Ekstensi .zip ditambahkan otomatis. Nama yang sama dipakai sebagai folder di dalam ZIP.</p>
+          </div>
+        </fieldset>
+
+        <button type="button" class="btn primary block" id="e-generate"><svg class="icon"><use href="#i-download"/></svg>Generate Certificates</button>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="view-settings" data-title="Pengaturan" hidden>
+        <h2>Pengaturan</h2>
+        <div class="field">
+          <label for="s-project">Nama proyek</label>
+          <input type="text" id="s-project" maxlength="80" autocomplete="off">
+        </div>
+        <div class="card">
+          <div class="card-title"><svg class="icon"><use href="#i-info"/></svg><span>Penyimpanan lokal</span></div>
+          <p class="muted">Hanya <b>pengaturan desain dan ekspor</b> yang disimpan otomatis di browser ini (LocalStorage). Gambar template dan daftar peserta <b>tidak</b> disimpan; unggah kembali setelah memuat ulang halaman.</p>
+        </div>
+        <div class="card">
+          <div class="card-title"><svg class="icon"><use href="#i-shield"/></svg><span>Privasi</span></div>
+          <p class="muted">Seluruh proses berjalan di browser Anda. Tidak ada file atau nama yang dikirim ke server, dan tidak ada analytics.</p>
+        </div>
+        <button type="button" class="btn danger-ghost" id="s-reset"><svg class="icon"><use href="#i-reset"/></svg>Reset pengaturan</button>
+      </section>
+    </div>
+  </aside>
+
+  <!-- ============ ACTION BAR ============ -->
+  <footer class="actionbar" aria-label="Status dan aksi">
+    <div class="ab-stats">
+      <span class="stat"><svg class="icon"><use href="#i-users"/></svg><span id="ab-count">0 peserta</span></span>
+      <span class="stat" id="ab-template-wrap"><span class="dot" id="ab-template-dot"></span><span id="ab-template">Template belum diunggah</span></span>
+      <span class="stat" id="ab-ready-wrap"><span class="dot" id="ab-ready-dot"></span><span id="ab-ready">Belum siap ekspor</span></span>
+    </div>
+    <button type="button" class="btn primary lg" id="generate-btn"><svg class="icon"><use href="#i-download"/></svg><span>Generate Certificates</span></button>
+  </footer>
+</div>
+
+<!-- Generator progress panel -->
+<div class="gen-panel" id="gen-panel" hidden role="dialog" aria-modal="false" aria-labelledby="gen-title">
+  <div class="gen-head">
+    <strong id="gen-title">Generating certificates...</strong>
+    <button type="button" class="icon-btn" id="gen-close" aria-label="Tutup panel" hidden><svg class="icon"><use href="#i-x"/></svg></button>
+  </div>
+  <p class="muted" id="gen-sub"></p>
+  <div class="progress" id="gen-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="gen-title"><div class="progress-fill" id="gen-fill"></div></div>
+  <div class="gen-stats">
+    <span>Progress: <b id="gen-done">0</b> / <b id="gen-total">0</b></span>
+    <span>Completed: <b id="gen-ok">0</b></span>
+    <span>Failed: <b id="gen-fail">0</b></span>
+  </div>
+  <div class="gen-errors" id="gen-errors" hidden><ul id="gen-error-list"></ul></div>
+  <div class="gen-actions">
+    <button type="button" class="btn" id="gen-cancel">Batalkan</button>
+    <button type="button" class="btn" id="gen-details" hidden>Lihat detail error</button>
+    <button type="button" class="btn primary" id="gen-download" hidden><svg class="icon"><use href="#i-download"/></svg>Unduh ZIP</button>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+<div id="modal-root"></div>
+
+<input type="file" id="file-template" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
+<input type="file" id="file-participants" accept=".txt,.csv,text/plain,text/csv" hidden>
+
+<script src="assets/vendor/jszip.min.js"></script>
+<script src="assets/js/export.js"></script>
+<script src="assets/js/generator.js"></script>
+<script src="assets/js/editor.js"></script>
+<script src="assets/js/participants.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
